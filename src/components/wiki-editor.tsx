@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
-import MDEditor from "@uiw/react-md-editor";
-import { Upload, X } from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import MDEditor from '@uiw/react-md-editor';
+import { Upload, X } from 'lucide-react';
+import type React from 'react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { createArticle } from '@/app/actions/articles';
 
 interface WikiEditorProps {
   initialTitle?: string;
@@ -28,8 +29,8 @@ interface FormErrors {
 }
 
 export default function WikiEditor({
-  initialTitle = "",
-  initialContent = "",
+  initialTitle = '',
+  initialContent = '',
   isEditing = false,
   articleId,
 }: WikiEditorProps) {
@@ -44,11 +45,11 @@ export default function WikiEditor({
     const newErrors: FormErrors = {};
 
     if (!title.trim()) {
-      newErrors.title = "Title is required";
+      newErrors.title = 'Title is required';
     }
 
     if (!content.trim()) {
-      newErrors.content = "Content is required";
+      newErrors.content = 'Content is required';
     }
 
     setErrors(newErrors);
@@ -86,8 +87,8 @@ export default function WikiEditor({
     };
 
     // Log the form data (as requested - no actual API calls)
-    console.log("Form submitted:", {
-      action: isEditing ? "edit" : "create",
+    console.log('Form submitted:', {
+      action: isEditing ? 'edit' : 'create',
       articleId: isEditing ? articleId : undefined,
       data: formData,
     });
@@ -100,8 +101,8 @@ export default function WikiEditor({
     // In a real app, you would navigate after successful submission
     alert(
       `Article ${
-        isEditing ? "updated" : "created"
-      } successfully! Check console for form data.`,
+        isEditing ? 'updated' : 'created'
+      } successfully! Check console for form data.`
     );
   };
 
@@ -109,15 +110,15 @@ export default function WikiEditor({
   const handleCancel = () => {
     // In a real app, you would navigate back
     const shouldLeave = window.confirm(
-      "Are you sure you want to cancel? Any unsaved changes will be lost.",
+      'Are you sure you want to cancel? Any unsaved changes will be lost.'
     );
     if (shouldLeave) {
-      console.log("User cancelled editing");
+      console.log('User cancelled editing');
       // navigation logic would go here
     }
   };
 
-  const pageTitle = isEditing ? "Edit Article" : "Create New Article";
+  const pageTitle = isEditing ? 'Edit Article' : 'Create New Article';
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -145,7 +146,7 @@ export default function WikiEditor({
                 placeholder="Enter article title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className={errors.title ? "border-destructive" : ""}
+                className={errors.title ? 'border-destructive' : ''}
               />
               {errors.title && (
                 <p className="text-sm text-destructive">{errors.title}</p>
@@ -164,17 +165,17 @@ export default function WikiEditor({
               <Label htmlFor="content">Content (Markdown) *</Label>
               <div
                 className={`border rounded-md ${
-                  errors.content ? "border-destructive" : ""
+                  errors.content ? 'border-destructive' : ''
                 }`}
               >
                 <MDEditor
                   value={content}
-                  onChange={(val) => setContent(val || "")}
+                  onChange={(val) => setContent(val || '')}
                   preview="edit"
                   hideToolbar={false}
                   visibleDragbar={false}
                   textareaProps={{
-                    placeholder: "Write your article content in Markdown...",
+                    placeholder: 'Write your article content in Markdown...',
                     style: { fontSize: 14, lineHeight: 1.5 },
                   }}
                 />
@@ -270,7 +271,7 @@ export default function WikiEditor({
                 disabled={isSubmitting}
                 className="min-w-[100px]"
               >
-                {isSubmitting ? "Saving..." : "Save Article"}
+                {isSubmitting ? 'Saving...' : 'Save Article'}
               </Button>
             </div>
           </CardContent>
